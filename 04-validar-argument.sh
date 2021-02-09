@@ -13,4 +13,3 @@ fi
 
 echo "Los argumentos son $1 $2 "
 exit 0
-
