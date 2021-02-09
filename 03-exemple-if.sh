@@ -4,11 +4,19 @@
 # Primer ejemplo if
 # $ prog edat
 #-----------------------------------
-if [ $# -ne l ];
+if [ $# -ne 1 ]
+then	
 	echo "Error: nºargument incorecte"
 	echo "Usage: $0 edat"
 	exit 1
 fi
 
-echo $1
+# xixa
+edat=$1
+
+if [ $edat -ge 18 ]
+then
+	echo "Edat $edat major d'edat"
+fi
+
 exit 0
