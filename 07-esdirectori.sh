@@ -1,7 +1,8 @@
 # !/bin/bash
 # @edt ASIX M01-ISO
 # Febrer 2021
-#  $ bash 07-esdirecotri.sh directori
+# llistar el directorio si existe
+#  $ prog dir
 # -------------------------------------
 ERR_NARGS=1
 ERR_DIREX=2
@@ -13,13 +14,14 @@ then
     echo "Usage: $0 directori"
     exit $ERR_NARGS
 fi
+#Validar si existe el directorio
 directori=$1
 if ! [ -d $directori ]
 then
-    echo "Error: El argument introduit no es un directori existent"
+    echo "Error: $directori no es un directori existent"
     echo "Usage: $0 directori"
     exit $ERR_DIREX
 fi
 
-echo $directori
+ls $directori
 exit 0
