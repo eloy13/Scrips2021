@@ -10,29 +10,48 @@ then
 fi
 user=$1
 linea=$(echo $user| grep "^$user:" /etc/passwd)
-if [ $? -eq 0 ]
+if [ $? -ne 0 ]
 then 
-    login=$(echo $linea | cut -d: -f1)
-    echo "login: $login"
-    uid=$(echo $linea | cut -d: -f3)
-    echo "uid: $uid"
-    gid=$(echo $linea | cut -d: -f4)
-    echo "gid: $gid"
-    gecos=$(echo $linea |cut -d: -f5)
-    echo "gecos: $gecos"
-    homedir=$(echo $linea | cut -d: -f6)
-    echo "homedir: $homedir"
-    bash=$(echo $linea | cut -d: -f7)
-    echo "bash: $bash"
-else
-       echo "ERROR el usuario $1 no existe"
-       return 0       
+    echo "ERROR el usuario $1 no existe"
+    return 0
 fi
-return 0
+login=$(echo $linea | cut -d: -f1)
+uid=$(echo $linea | cut -d: -f3)
+gid=$(echo $linea | cut -d: -f4)
+gecos=$(echo $linea |cut -d: -f5)
+homedir=$(echo $linea | cut -d: -f6)
+bash=$(echo $linea | cut -d: -f7)
+gname=$(egrep "^[^:]*:[^:]*:$uid:" /etc/groups | cut -d: -f1)
+echo "login: $login"
+echo "uid: $uid"
+echo "gid: $gid"
+echo "gecos: $gecos"
+echo "homedir: $homedir"
+echo "bash: $bash"
+echo "el group es: $gname"
 }
 
-
-
+function showGroup(){
+if [ $# -eq 0 ]
+then
+        echo "Numero de argumentos no valido"
+        return 1
+fi
+group=$1
+linea=$(grep "^$group:" /etc/group)
+if [ $? -ne 0 ]
+then
+    echo "ERROR no existe el grupo"
+    return 2
+fi  
+    gid=$(echo $linea |cut -d: -f3)
+    user=$(echo $linea |cut -d: -f4)
+    echo "El grupo es $group"
+    echo "La pasword es x"
+    echo "El gid es $gid"
+    echo "Los usuarios con este grupo como segundarios son $user"  
+}
+	
 
 function suma(){
 	echo "La suma es:"$(($1+$2))
